@@ -1,0 +1,39 @@
+<div class="row">
+  <aside class="col-md-4">
+    <% if current_user %>
+    <h1><%= current_user.name %></h1>
+    <span> <%= link_to "view my profile", current_user %> </span>
+    <span> <%= pluralize(current_user.posts.count, "posts")%> </span>
+    <%= render 'shared/post_form' %>
+
+    <%= button_to 'Logout', logout_path, method: :delete %>
+    <% end %>
+
+  </aside>
+  <div class="col-md-8">
+    <h3> Feed timeline </h3>
+    <% if @feed_items.any? %>
+      <ul class="list-group">
+        <% @feed_items.each do |post| %>
+        <li class="list-group-item">
+
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <%= image_tag("blog2-thumb.jpg", class: "media-object") %>
+              </a>
+            </div>
+            <div class="media-body">
+              <h5 class="media-heading"> <%= post.user.name %>
+                Posted <%= time_ago_in_words(post.created_at) %> ago.</h5>
+              <%= post.content %>
+            </div>
+          </div>
+
+        </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+  </div>
+</div>

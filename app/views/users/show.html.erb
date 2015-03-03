@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-3">
+    <h1></h1>
+    <%= image_tag("blog2-thumb.jpg") %>
+    <p>
+      <strong>Name:</strong>
+      <%= @user.name %>
+    </p>
+
+    <% @user ||= current_user %>
+    <div class="stats">
+      <a href="<%= following_user_path(@user) %>">
+        <strong id="following" class="stat">
+          <%= @user.following.count %>
+        </strong>
+        following
+      </a>
+      <a href="<%= followers_user_path(@user) %>">
+        <strong id="followers" class="stat">
+          <%= @user.followers.count %>
+        </strong>
+        followers
+      </a>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <p id="notice"><%= notice %></p>
+
+    <%= render 'follow_form' if logged_in? %>
+
+    <h3> Posts(<%= @user.posts.count %>) </h3>
+    <% if @user.posts.any? %>
+    <ul class="list-group">
+      <% @user.posts.each do |post| %>
+        <li class="list-group-item">
+
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <%= image_tag("blog2-thumb.jpg", class: "media-object") %>
+              </a>
+            </div>
+            <div class="media-body">
+              <h5 class="media-heading">Posted <%= time_ago_in_words(post.created_at) %> ago.</h5>
+                <%= post.content %>
+            </div>
+          </div>
+
+        </li>
+      <% end %>
+    </ul>
+    <% end %>
+
+  </div>
+</div>
