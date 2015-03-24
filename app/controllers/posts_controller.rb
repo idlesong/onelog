@@ -25,6 +25,12 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     #@post = Post.new(post_params)
+    if params[:fields]
+      params[:fields].each { |content|
+        current_user.posts.bulid(content: content)
+      }
+    end
+
     @post = current_user.posts.build(post_params)
 
     respond_to do |format|

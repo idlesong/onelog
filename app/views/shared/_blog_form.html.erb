@@ -1,0 +1,7 @@
+<%= form_for @user do |f| %>
+<%= f.fields_for :posts, [Post.new]*10 do |post| %>
+<%= post.text_field :content %>
+<%= text_field_tag "fields[#{i}][content]" %>
+<% end %>
+<%= f.submit %>
+<% end %>

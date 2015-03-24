@@ -1,10 +1,21 @@
 <div class="row">
   <aside class="col-md-4">
     <% if current_user %>
-    <h1><%= current_user.name %></h1>
+
+    <%= image_tag current_user.avatar.url(:thumbnail) %>
+    <strong><%= current_user.name %></strong>
+
+    </br>
     <span> <%= link_to "view my profile", current_user %> </span>
     <span> <%= pluralize(current_user.posts.count, "posts")%> </span>
     <%= render 'shared/post_form' %>
+
+    <%= form_for current_user do |f| %>
+    <%= f.fields_for :posts, [Post.new]*10 do |post| %>
+    <%= post.text_area :content %>
+    <% end %>
+    <%= f.submit "Publish blog"%>
+    <% end %>
 
     <%= button_to 'Logout', logout_path, method: :delete %>
     <% end %>
@@ -19,12 +30,12 @@
 
           <div class="media">
             <div class="media-left">
-              <a href="#">
-                <%= image_tag("blog2-thumb.jpg", class: "media-object") %>
+              <a href=<%= user_path(post.user.id) %> >
+                <%= image_tag(post.user.avatar.url(:thumbnail) , class: "pull-left  media-object")%>
               </a>
             </div>
             <div class="media-body">
-              <h5 class="media-heading"> <%= post.user.name %>
+              <h5 class="media-heading"> <%= link_to(post.user.name,user_path(post.user.id)) %>
                 Posted <%= time_ago_in_words(post.created_at) %> ago.</h5>
               <%= post.content %>
             </div>
