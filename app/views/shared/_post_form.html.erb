@@ -16,7 +16,8 @@
   <%= f.text_area :content , placeholder: "Please write a post"%>
 </div>
 
-<%= f.fields_for :posts, [Post.new]*10 do |post| %>
+
+<%= f.fields_for :posts, [Post.new]*10 do |post,i| %>
 <%= text_field_tag "fields[#{i}][content]" %>
 <% end %>
 

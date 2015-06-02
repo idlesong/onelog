@@ -8,17 +8,29 @@
     </br>
     <span> <%= link_to "view my profile", current_user %> </span>
     <span> <%= pluralize(current_user.posts.count, "posts")%> </span>
-    <%= render 'shared/post_form' %>
+    <!-- <%= render 'shared/post_form' %> -->
 
-    <%= form_for current_user do |f| %>
+    <%= form_for(@post) do |f| %>
     <%= f.fields_for :posts, [Post.new]*10 do |post| %>
-    <%= post.text_area :content %>
+    <%= f.text_area :content %>
     <% end %>
+    </br>
     <%= f.submit "Publish blog"%>
     <% end %>
 
-    <%= button_to 'Logout', logout_path, method: :delete %>
     <% end %>
+
+    </br>
+    <div class="list-group">
+      <a href="#" class="list-group-item disabled">
+        Favorite tag groups
+      </a>
+      <a href="#" class="list-group-item">Tech: Linux, Gnome, Opensource</a>
+      <a href="#" class="list-group-item">GFW: Shadowsocks, VPN, Lantern, Hosts, Hosts, hosts</a>
+      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+      <a href="#" class="list-group-item">Vestibulum at eros</a>
+    </div>
+
 
   </aside>
   <div class="col-md-8">

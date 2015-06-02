@@ -24,8 +24,12 @@
         <ul class="nav navbar-nav">
           <li class="active"><%= link_to('Home', admin_path) %></li>
           <li><a href="#">reader</a></li>
-          <li><%= link_to('signup', new_user_path) %></li>
+          <li><%= link_to('signup', new_user_path) %></li>          
+          <% if logged_in? %>
+          <li><%= link_to('logout', logout_path, method: :delete) %></li>
+          <% else %>
           <li><%= link_to('login', login_path) %></li>
+          <% end %>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div>
