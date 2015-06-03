@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+
+  before_create :generate_authentication_token
+
   has_many :posts, dependent: :destroy
   #accepts_nested_attributes_for :posts, :reject_if => lambda { |b| b[:content].blank? }
   #attr_accessible :posts_attributes
@@ -20,6 +23,17 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
+  def generate_authentication_token
+    loop do
+      self.authentication_token = SecureRandom.base64(64)
+      break if !User.find_by(authentication_token: authentication_token)
+    end
+  end
+
+  def reset_authentication_token!
+    generate_authentication_token
+    save
+  end
 
   def feed
     following_ids = "SELECT followed_id FROM relationships
